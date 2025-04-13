@@ -15,18 +15,20 @@
 pub fn to_pig_latin(word: &str) -> String {
     let mut chars = word.chars();
 
-    if let Some(first) = chars.next() {
-        let rest: String = chars.collect();
+    match chars.next() {
+        // NOTE I peeked on Chapter 19.3 and found Match Guards, which allowed
+        // to rewrite using a single match statement
+        Some(first) if is_vowel(first) => format!("{}-hay", word),
+        Some(first) => {
+            let rest: String = chars.collect();
 
-        if is_vowel(first) {
-            format!("{}-hay", word)
-        } else if rest.is_empty() {
-            format!("{}ay", first)
-        } else {
-            format!("{}-{}ay", rest, first)
+            if rest.is_empty() {
+                format!("{}ay", first)
+            } else {
+                format!("{}-{}ay", rest, first)
+            }
         }
-    } else {
-        String::new()
+        None => String::new(),
     }
 }
 
