@@ -1,3 +1,5 @@
+use std::{cmp, collections::HashMap};
+
 /// Returns the median of the provided list of integers.
 ///
 /// The provided list of integers must be non-empty and sorted.
@@ -43,4 +45,41 @@ fn get_median_len_even(list: &[i32], len: usize) -> f32 {
 fn get_median_len_odd(list: &[i32], len: usize) -> f32 {
     let p = (len - 1) / 2;
     list[p] as f32
+}
+
+/// Returns the mode of the provided list.
+///
+/// The mode is the value (or the values) that occurs more frequently in the list.
+///
+/// Examples
+/// ```txt
+/// [1, 1, 2, 3, 3, 3] -> 3
+///           ^  ^  ^
+///
+/// [1, 1, 2, 3, 3] -> [1, 3]
+///  ^  ^     ^  ^
+/// ```
+pub fn get_mode(list: &[i32]) -> Vec<i32> {
+    let (frequencies, max_frequency): (HashMap<i32, u32>, u32) = list.iter().fold(
+        (HashMap::new(), 0),
+        |(mut frequencies, mut max_frequency), n| {
+            let count = frequencies.entry(*n).or_default();
+            *count += 1;
+
+            max_frequency = cmp::max(max_frequency, *count);
+
+            (frequencies, max_frequency)
+        },
+    );
+
+    frequencies
+        .into_iter()
+        .filter_map(|(n, frequency)| {
+            if frequency == max_frequency {
+                Some(n)
+            } else {
+                None
+            }
+        })
+        .collect()
 }
