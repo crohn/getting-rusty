@@ -11,7 +11,8 @@
 /// A single consonant is handled by just adding 'ay', so the resulting word
 /// does not start with a dash.
 ///
-/// The function is UTF-8 aware, but treats non-ASCII vowels as consonants.
+/// The function is UTF-8 aware, and considers vowels plain latin vowels, plus
+/// the ones with grave or acute accents applied on them, ie. a, à, á.
 pub fn to_pig_latin(word: &str) -> String {
     let mut chars = word.chars();
 
@@ -34,5 +35,8 @@ pub fn to_pig_latin(word: &str) -> String {
 
 /// Returns true if the provided char is a latin vowel.
 pub fn is_vowel(c: char) -> bool {
-    matches!(c.to_ascii_lowercase(), 'a' | 'e' | 'i' | 'o' | 'u')
+    matches!(
+        c.to_ascii_lowercase(),
+        'a' | 'e' | 'i' | 'o' | 'u' | 'à' | 'è' | 'ì' | 'ò' | 'ù' | 'á' | 'é' | 'í' | 'ó' | 'ú'
+    )
 }

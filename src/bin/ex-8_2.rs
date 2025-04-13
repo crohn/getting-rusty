@@ -22,5 +22,5 @@ fn main() {
     assert_eq!(word, "あay");
 
     let word = to_pig_latin("á");
-    assert_eq!(word, "áay");
+    assert_eq!(word, "á-hay");
 }
