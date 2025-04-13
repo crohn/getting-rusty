@@ -31,7 +31,8 @@ pub fn get_median(list: &[i32]) -> Result<f32, String> {
 /// ```
 fn get_median_len_even(list: &[i32], len: usize) -> f32 {
     let p = (len - 1) / 2;
-    (list[p] + list[p + 1]) as f32 / 2.0
+    // cast before division, to preserve precision
+    (list[p] as f32 + list[p + 1] as f32) / 2.0
 }
 
 /// Example
